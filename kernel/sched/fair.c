@@ -8256,7 +8256,9 @@ static inline int find_best_target(struct task_struct *p, int *backup_cpu,
 
 	if (target_cpu == -1 && most_spare_cap_cpu != -1 &&
 		/* ensure we use active cpu for active migration */
-		!(p->state == TASK_RUNNING && !idle_cpu(most_spare_cap_cpu)))
+		!(p->state == TASK_RUNNING && !idle_cpu(most_spare_cap_cpu)) &&
+		/* do not pick an overutilized most_spare_cap_cpu */
+		!cpu_overutilized(most_spare_cap_cpu))
 		target_cpu = most_spare_cap_cpu;
 
 	trace_sched_find_best_target(p, prefer_idle, min_util, cpu,
