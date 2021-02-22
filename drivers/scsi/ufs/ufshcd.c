@@ -11376,6 +11376,14 @@ int ufshcd_init(struct ufs_hba *hba, void __iomem *mmio_base, unsigned int irq)
 	pm_qos_add_request(&hba->pm_qos.req, PM_QOS_CPU_DMA_LATENCY,
 			   PM_QOS_DEFAULT_VALUE);
 
+	mutex_init(&hba->pm_qos.lock);
+	INIT_WORK(&hba->pm_qos.get_work, ufshcd_pm_qos_get_worker);
+	INIT_WORK(&hba->pm_qos.put_work, ufshcd_pm_qos_put_worker);
+	hba->pm_qos.req.type = PM_QOS_REQ_AFFINE_IRQ;
+	hba->pm_qos.req.irq = irq;
+	pm_qos_add_request(&hba->pm_qos.req, PM_QOS_CPU_DMA_LATENCY,
+			   PM_QOS_DEFAULT_VALUE);
+
 	/* IRQ registration */
 	err = devm_request_irq(dev, irq, ufshcd_intr, IRQF_SHARED,
 				dev_name(dev), hba);
