@@ -408,6 +408,7 @@ static int gsx_gesture_ist(struct goodix_ts_core *core_data,
 				input_report_key(core_data->input_dev, BTN_INFO, 0);
 				input_sync(core_data->input_dev);
 				core_data->fod_pressed = false;
+			        sysfs_notify(&core_data->gtp_touch_dev->kobj, NULL, "fp_state");
 			}
 			core_data->sleep_finger = 0;
 		}
