@@ -1168,7 +1168,15 @@ static void override_custom_release(char __user *release, size_t len)
 		copy_to_user(release, CONFIG_UNAME_OVERRIDE_STRING,
 			       strlen(CONFIG_UNAME_OVERRIDE_STRING) + 1);
 	}
-
+#ifdef CONFIG_KPROBES	
+	if (strstr(buf, "me.weishu.kernelsu")) {
+		char easteregg[50];
+		strcpy(easteregg, UTS_RELEASE);
+		strcat(easteregg, " + SuSFS ඞ");
+		copy_to_user(release, easteregg,
+			       strlen(easteregg) + 1);
+	}
+#endif	
 	kfree(buf);
 
 }
