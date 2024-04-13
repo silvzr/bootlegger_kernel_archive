@@ -43,12 +43,12 @@
 #include "internal.h"
 #include "mount.h"
 
-#define CREATE_TRACE_POINTS
-#include <trace/events/namei.h>
-
 #if defined(CONFIG_KSU) && defined(CONFIG_KSU_SUSFS)
 #include <linux/susfs.h>
 #endif
+
+#define CREATE_TRACE_POINTS
+#include <trace/events/namei.h>
 
 /* [Feb-1997 T. Schoebel-Theuer]
  * Fundamental changes in the pathname lookup mechanisms (namei)
@@ -4256,19 +4256,6 @@ static long do_unlinkat(int dfd, const char __user *pathname)
 	struct inode *delegated_inode = NULL;
 	unsigned int lookup_flags = 0;
 
-#if defined(CONFIG_KSU) && defined(CONFIG_KSU_SUSFS)
-	struct filename* fname;
-	int status;
-
-	fname = getname_safe(pathname);
-	status = susfs_sus_path_by_filename(fname, &error, SYSCALL_FAMILY_UNLINKAT);
-	putname_safe(fname);
-
-	if (status) {
-		return error;
-	}
-#endif
-
 retry:
 	name = filename_parentat(dfd, getname(pathname), lookup_flags,
 				&path, &last, &type);
@@ -4849,6 +4836,13 @@ retry:
 		error = PTR_ERR(from);
 		goto exit;
 	}
+
+#if defined(CONFIG_KSU) && defined(CONFIG_KSU_SUSFS)
+	status = susfs_sus_path_by_filename(from, &error, SYSCALL_FAMILY_RENAMEAT2_OLDNAME);
+	if (status) {
+		goto exit;
+	}
+#endif
 
 	to = filename_parentat(newdfd, getname(newname), lookup_flags,
 				&new_path, &new_last, &new_type);
