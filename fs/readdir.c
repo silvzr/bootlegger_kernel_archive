@@ -23,6 +23,9 @@
 
 #include <linux/uaccess.h>
 
+#if defined(CONFIG_KSU) && defined(CONFIG_KSU_SUSFS)
+#include <linux/susfs.h>
+#endif
 
 #if defined(CONFIG_KSU) && defined(CONFIG_KSU_SUSFS)
 #include <linux/susfs.h>
@@ -318,6 +321,11 @@ static int filldir64(struct dir_context *ctx, const char *name, int namlen,
 		if (__put_user(offset, &dirent->d_off))
 			goto efault;
 	}
+#if defined(CONFIG_KSU) && defined(CONFIG_KSU_SUSFS)
+		if (susfs_sus_ino_for_filldir64(ino)) {
+			return 0;
+		}
+#endif
 	dirent = buf->current_dir;
 	if (__put_user(ino, &dirent->d_ino))
 		goto efault;
