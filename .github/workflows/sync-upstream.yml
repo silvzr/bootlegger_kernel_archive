@@ -34,6 +34,21 @@ jobs:
       - name: Sync Upstream
         uses: zhangnew/sync-upstream@v1
         with:
+          upstream: xiaomi-sm6150/android_kernel_xiaomi_sm6150
+          upstream-branch: lineage-21
+          branch: lineage-21
+          
+  sync-upstream-lineage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: lineage-20
+          fetch-depth: 0
+      - name: Sync Upstream
+        uses: zhangnew/sync-upstream@v1
+        with:
           upstream: LineageOS/android_kernel_xiaomi_sm6150
           upstream-branch: lineage-20
           branch: lineage-20
