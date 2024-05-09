@@ -67,3 +67,18 @@ jobs:
           upstream: PixelOS-Devices/kernel_xiaomi_sm6150
           upstream-branch: fourteen
           branch: pixelos-14.0
+
+  sync-upstream-derpfest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: derp-14
+          fetch-depth: 0
+      - name: Sync Upstream
+        uses: zhangnew/sync-upstream@v1
+        with:
+          upstream: DerpFest-Devices/kernel_xiaomi_sm6150
+          upstream-branch: 14
+          branch: derp-14
