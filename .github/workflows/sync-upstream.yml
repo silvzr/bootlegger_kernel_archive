@@ -53,6 +53,21 @@ jobs:
           upstream-branch: lineage-21
           branch: lineage-21
 
+  sync-upstream-unofflineage21:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: unofflineage-21
+          fetch-depth: 0
+      - name: Sync Upstream
+        uses: zhangnew/sync-upstream@v1
+        with:
+          upstream: raul-16/android_kernel_xiaomi_davinci
+          upstream-branch: lineage-21
+          branch: unofflineage-21
+
   sync-upstream-pixelos:
     runs-on: ubuntu-latest
     steps:
