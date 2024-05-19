@@ -9,7 +9,7 @@
 - Download **[one of the releases](https://github.com/silvzr/kernel_milk_davinci/releases)**
 - Backup your boot.img and dtbo.img
 - Flash it via recovery
-- Optional: If present, download the **[KernelSU Manager]
+- Optional: If present, download the KernelSU Manager otherwise do it from the **[official repo](https://github.com/tiann/KernelSU/releases/latest)
 
 ## Build
 
