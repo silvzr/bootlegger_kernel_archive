@@ -6,14 +6,14 @@
 
 ## Install
 
-- Download **[one of the releases](https://github.com/silvzr/kernel_milk_davinci/releases)**
+- Download **[one of the releases](https://github.com/silvzr/bootlegger_kernel/releases)**
 - Backup your boot.img and dtbo.img
 - Flash it via recovery
-- Optional: If present, download the KernelSU Manager otherwise do it from the **[official repo](https://github.com/tiann/KernelSU/releases/latest)
+- Optional: If present, download the KernelSU Manager otherwise do it from the **[official repo](https://github.com/tiann/KernelSU/releases/latest)**
 
 ## Build
 
-- Fork **[this](https://github.com/silvzr/kernel_milk_davinci/)** repository
+- Fork **[this](https://github.com/silvzr/bootlegger_kernel/)** repository
 - Run Action "CI Build"
 
 ## Thanks / Credits
