@@ -1,4 +1,4 @@
-# Bootlegger
+# Bootlegger Kernel
 
 **For davinci | Mi 9T / Redmi K20**
 
