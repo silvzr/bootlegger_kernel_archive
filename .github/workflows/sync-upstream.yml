@@ -14,14 +14,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: lineage-21
+          ref: los21
           fetch-depth: 0
       - name: Sync Upstream
         uses: zhangnew/sync-upstream@v1
         with:
-          upstream: basamaryan/android_kernel_xiaomi_sm6150
+          upstream: xiaomi-sm6150/android_kernel_xiaomi_sm6150
           upstream-branch: lineage-21
-          branch: lineage-21
+          branch: los21
 
   sync-upstream-unofflineage21:
     runs-on: ubuntu-latest
@@ -38,6 +38,21 @@ jobs:
           upstream-branch: lineage-21
           branch: unofflos21
 
+  sync-upstream-lineage21-beta:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: lineage-21
+          fetch-depth: 0
+      - name: Sync Upstream
+        uses: zhangnew/sync-upstream@v1
+        with:
+          upstream: basamaryan/android_kernel_xiaomi_sm6150
+          upstream-branch: lineage-21
+          branch: lineage-21
+          
   sync-upstream-crdroid14:
     runs-on: ubuntu-latest
     steps:
