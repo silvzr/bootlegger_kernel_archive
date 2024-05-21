@@ -3,12 +3,41 @@ name: Sync Upstream
 permissions: write-all
 
 on:
-  #schedule:
-    #- cron: '0 0 * * 1'  # scheduled for 00:00 every Monday
   workflow_dispatch:
+      inputs:
+        Lineage-21:
+          required: true
+          type: boolean
+          default: true
+        Unofflineage-21:
+          required: true
+          type: boolean
+          default: true
+        Lineage-21-beta:
+          required: true
+          type: boolean
+          default: true
+        CrDroid:
+          required: true
+          type: boolean
+          default: true
+        Sleepy:
+          required: true
+          type: boolean
+          default: true
+        PixelOS:
+          required: true
+          type: boolean
+          default: true
+        DerpFest:
+          required: true
+          type: boolean
+          default: true
+
 
 jobs:
   sync-upstream-lineage21:
+    if: ${{ inputs.Lineage-21 }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -24,6 +53,7 @@ jobs:
           branch: los21
 
   sync-upstream-unofflineage21:
+    if: ${{ inputs.Unofflineage-21 }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -39,6 +69,7 @@ jobs:
           branch: unofflos21
 
   sync-upstream-lineage21-beta:
+    if: ${{ inputs.Lineage-21-beta }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -54,6 +85,7 @@ jobs:
           branch: lineage-21
           
   sync-upstream-crdroid14:
+    if: ${{ inputs.CrDroid }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -69,6 +101,7 @@ jobs:
           branch: crdroid14
 
   sync-upstream-sleepy:
+    if: ${{ inputs.Sleepy }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -84,6 +117,7 @@ jobs:
           branch: sleepy
 
   sync-upstream-pixelos:
+    if: ${{ inputs.PixelOS }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -99,6 +133,7 @@ jobs:
           branch: pos14
 
   sync-upstream-derpfest:
+    if: ${{ inputs.DerpFest }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
