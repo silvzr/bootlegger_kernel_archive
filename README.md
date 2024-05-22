@@ -35,7 +35,7 @@ In case of error "fatal: the remote end hung up unexpectedly":
 After adding: Add to Readme credits & Add to sync-upstream workflow
 ```
 ```
-git clone https://github.com/[username]/kernel_milk_davinci.git
+git clone https://github.com/[username]/bootlegger_kernel_archive.git
 
 git remote add upstream [link].git
 git fetch upstream
