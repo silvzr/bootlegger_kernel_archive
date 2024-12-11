@@ -1125,6 +1125,11 @@ static int __hrtimer_start_range_ns(struct hrtimer *timer, ktime_t tim,
 {
 	struct hrtimer_clock_base *new_base;
 
+	if (WARN_ON_ONCE(!timer->function))
+		return;
+
+	base = lock_hrtimer_base(timer, &flags);
+
 	/* Remove an active timer from the queue: */
 	remove_hrtimer(timer, base, true);
 
