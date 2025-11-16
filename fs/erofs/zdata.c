@@ -10,6 +10,7 @@
 #include <linux/slab.h>
 #include <linux/cpuhotplug.h>
 
+#include <uapi/linux/sched/types.h>
 #include <trace/events/erofs.h>
 
 /*
@@ -147,15 +148,15 @@ static void erofs_destroy_percpu_workers(void)
 
 static struct kthread_worker *erofs_init_percpu_worker(int cpu)
 {
+	static const struct sched_param sched_zero_prio;
 	struct kthread_worker *worker =
 		kthread_create_worker_on_cpu(cpu, 0, "erofs_worker/%u", cpu);
 
 	if (IS_ERR(worker))
 		return worker;
 	if (IS_ENABLED(CONFIG_EROFS_FS_PCPU_KTHREAD_HIPRI))
-		sched_set_fifo_low(worker->task);
-	else
-		sched_set_normal(worker->task, 0);
+		sched_setscheduler_nocheck(worker->task, SCHED_RR, &sched_zero_prio);
+		//sched_set_fifo_low(worker->task);
 	return worker;
 }
 
@@ -269,7 +270,7 @@ int __init z_erofs_init_zip_subsystem(void)
 		goto out_error_pcluster_pool;
 
 	z_erofs_workqueue = alloc_workqueue("erofs_worker",
-			WQ_UNBOUND | WQ_HIGHPRI, num_possible_cpus());
+			WQ_HIGHPRI, num_possible_cpus());
 	if (!z_erofs_workqueue)
 		goto out_error_workqueue_init;
 
