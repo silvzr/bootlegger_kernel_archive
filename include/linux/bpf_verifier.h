@@ -199,7 +199,7 @@ struct bpf_insn_aux_data {
 
 struct bpf_verifier_log {
 	u32 level;
-	char *kbuf;
+	char kbuf[BPF_VERIFIER_TMP_LOG_SIZE];
 	char __user *ubuf;
 	u32 len_used;
 	u32 len_total;
@@ -212,7 +212,7 @@ static inline bool bpf_verifier_log_full(const struct bpf_verifier_log *log)
 
 static inline bool bpf_verifier_log_needed(const struct bpf_verifier_log *log)
 {
-	return log->level && log->ubuf && !bpf_verifier_log_full(log);
+	return log->level && log->kbuf && log->ubuf && !bpf_verifier_log_full(log);
 }
 
 __printf(2, 3) void bpf_verifier_log_write(struct bpf_verifier_env *env,
